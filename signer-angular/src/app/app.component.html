@@ -1,0 +1,10 @@
+<button (click)="signerService.login(EAuthType.ProviderKeeper)">ProviderKeeper</button>
+<button (click)="signerService.login(EAuthType.ProviderCloud)">ProviderCloud</button>
+<button (click)="signerService.login(EAuthType.ProviderWeb)">ProviderWeb</button>
+<button (click)="signerService.login(EAuthType.ProviderLedger)">ProviderLedger</button>
+<button (click)="signerService.login(EAuthType.ProviderMetamask)">ProviderMetamask</button>
+<button (click)="signerService.login(EAuthType.ProviderSeed)">ProviderSeed</button>
+<hr>
+<button (click)="signerService.getBalance()">getBalance</button>
+<hr>
+<button (click)="signerService.logout()">logout</button>
