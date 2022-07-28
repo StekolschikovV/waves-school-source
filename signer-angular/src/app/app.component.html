@@ -1,9 +1,11 @@
-<button (click)="signerService.login(EAuthType.ProviderKeeper)">ProviderKeeper</button>
-<button (click)="signerService.login(EAuthType.ProviderCloud)">ProviderCloud</button>
-<button (click)="signerService.login(EAuthType.ProviderWeb)">ProviderWeb</button>
-<button (click)="signerService.login(EAuthType.ProviderLedger)">ProviderLedger</button>
-<button (click)="signerService.login(EAuthType.ProviderMetamask)">ProviderMetamask</button>
-<button (click)="signerService.login(EAuthType.ProviderSeed)">ProviderSeed</button>
+{{signerService.user$.getValue() | json}}
+<hr>
+<button (click)="signerService.login(EAuthType.keeper, null)">ProviderKeeper</button>
+<button (click)="signerService.login(EAuthType.cloud, null)">ProviderCloud</button>
+<button (click)="signerService.login(EAuthType.web, null)">ProviderWeb</button>
+<button (click)="signerService.login(EAuthType.ledger, null)">ProviderLedger</button>
+<button (click)="signerService.login(EAuthType.metamask, null)">ProviderMetamask</button>
+<button (click)="signerService.login(EAuthType.seed, 'some seed')">ProviderSeed</button>
 <hr>
 <button (click)="signerService.getBalance()">getBalance</button>
 <hr>
