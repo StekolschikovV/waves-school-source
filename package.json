@@ -1,0 +1,26 @@
+{
+  "name": "waves school source",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@waves.exchange/provider-web": "^1.1.5",
+    "@waves/provider-seed": "^0.3.2",
+    "@waves/signer": "^1.0.11",
+    "@waves/waves-transactions": "^4.2.10",
+    "axlsign": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.2",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
+    "tsutils": "^3.21.0",
+    "typescript": "^4.7.4"
+  }
+}
