@@ -26,12 +26,10 @@ export interface ILoginEvent {
   type: 'login',
   provider: EAuthProvider
   seed: string | null
-  timestamp: number
 }
 
 export interface ILogoutEvent {
   type: 'logout'
-  timestamp: number
 }
 
 @Injectable({
@@ -41,12 +39,8 @@ export class SignerService {
 
   signer: Signer;
   event$ = new BehaviorSubject<ILoginEvent | ILogoutEvent | null>(null);
-
   user$ = new BehaviorSubject<IUser | null>(null);
 
-  eventSubscription2$ = this.event$.subscribe(event => {
-    console.log("+++ !!!3")
-  })
   eventSubscription$ = this.event$
     .pipe(
       tap(event => console.log('+++ tap event', event)),
@@ -60,8 +54,7 @@ export class SignerService {
       }),
       // @ts-ignore
       filter((event: ILoginEvent | ILogoutEvent) => event?.type === 'login'),
-      switchMap((event: ILoginEvent) => {
-        console.log("+++")
+      switchMap(async (event: ILoginEvent) => {
         const providerType = event.provider
         let provider = null
         switch (providerType) {
@@ -78,28 +71,23 @@ export class SignerService {
             provider = new ProviderCloud()
             break
           case EAuthProvider.web:
-            console.log("+++web")
             provider = new ProviderWeb()
             break
           case EAuthProvider.seed:
-            provider = new ProviderSeed()
+            provider = new ProviderSeed(event.seed || "")
             break
         }
         this.signer.setProvider(provider);
-        return this.signer.login()
+        return this.signer.login().then(e => e).catch(e => e)
       }),
       catchError((error) => {
-        console.log("+++error", error)
-        return of(null)
+        return of(error)
       })
     )
     .subscribe((data: IUser | null) => {
-
-        console.log("+++subscribe event", event)
-        // if (data?.address) {
-        //   this.user$.next(data)
-        // }
-        //
+        if (data?.address) {
+          this.user$.next(data)
+        }
     })
 
 
@@ -109,12 +97,12 @@ export class SignerService {
 
   logout = () => {
     console.log("!!!")
-    this.event$.next({type: 'logout', timestamp: Date.now()})
+    this.event$.next({type: 'logout'})
   }
 
   async login(providerType: EAuthProvider, seed: string | null = null) {
     console.log("!!!2")
-    this.event$.next({type: 'login', provider: providerType, seed, timestamp: Date.now()})
+    this.event$.next({type: 'login', provider: providerType, seed})
   }
 
   getBalance = async () => {
